@@ -7,7 +7,7 @@ namespace empresa.webapi.Configurations
     {
         public static void Config(IServiceCollection services)
         {
-            services.AddTransient<IEmpresaApplication, EmpresaApplication>();
+            services.AddTransient<IFerreteriaApplication, FerreteriaApplication>();
         }
     }
 }

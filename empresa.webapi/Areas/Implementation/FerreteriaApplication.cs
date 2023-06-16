@@ -1,15 +1,15 @@
 ﻿using empresa.webapi.Areas.Interface;
 using empresa.webapi.Configurations;
-using empresa.webapi.Dto.Empresa;
+using empresa.webapi.Dto.Ferreteria;
 using System.Data;
 
 namespace empresa.webapi.Areas.Implementation
 {
-    public class EmpresaApplication : IEmpresaApplication
+    public class FerreteriaApplication : IFerreteriaApplication
     {
-        public async Task<OperationResult<List<ListaEmpresaRespuestaDto>>> RegistrarPersona(string nombre,string apePaterno, string apeMaterno, string correo, int codigoPersona)
+        public async Task<OperationResult<List<ListaFerreteriaRespuestaDto>>> RegistrarPersona(string nombre,string apePaterno, string apeMaterno, string correo, int codigoPersona)
         {
-            var resultado = new OperationResult<List<ListaEmpresaRespuestaDto>> { isValid = false, exceptions = new List<OperationException>() };
+            var resultado = new OperationResult<List<ListaFerreteriaRespuestaDto>> { isValid = false, exceptions = new List<OperationException>() };
             try
             {
                 var ds = await new ProcedureGeneral().Procedure(new ProcedureRequestDto()
@@ -22,11 +22,11 @@ namespace empresa.webapi.Areas.Implementation
 
                 var listaMedidaTipo = (from x in ds.Tables[0].AsEnumerable() select x);
 
-                var response = new List<ListaEmpresaRespuestaDto>();
+                var response = new List<ListaFerreteriaRespuestaDto>();
 
                 foreach (var medidaTipo in listaMedidaTipo)
                 {
-                    response.Add(new ListaEmpresaRespuestaDto()
+                    response.Add(new ListaFerreteriaRespuestaDto()
                     {
                         CodResultado = medidaTipo.Field<int?>("CodResultado") ?? 0,
                         DesResultado = medidaTipo.Field<string?>("DesResultado") ?? "",

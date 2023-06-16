@@ -18,8 +18,8 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("OpenAPISpec", new OpenApiInfo
     {
-        Title = "Api Empresas",
-        Description = "Api para la gestión de empresas",
+        Title = "Api Test",
+        Description = "Api Test",
         Version = "v1"
     });
 
