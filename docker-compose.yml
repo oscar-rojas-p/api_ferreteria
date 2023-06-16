@@ -1,0 +1,22 @@
+version: '3.9'
+# Definicion de los servicios
+services:
+
+  # Contenedor 
+  empresa-api:
+    container_name: empresa-api
+    build:
+      context: .
+      dockerfile: empresa.webapi/Dockerfile
+    # project-name_
+    image: registry.gitlab.com/iot.abx/empresa.webapi
+    restart: always
+    ports:
+      - 8006:80
+# Crear red
+# docker network create <network_name>
+# Redes para facilitar la comunicacion entre contenedores
+networks:
+  default:
+    external: true
+    name: services-net
