@@ -7,8 +7,8 @@
         public int CantidadActual  {get;set;}
         public int CantidadMinima  {get;set;}
         public int CantidadMaxima  {get;set;}
-        public double PrecioCompra  {get;set;}
-        public double PrecioVenta   {get;set;}
+        public decimal PrecioCompra  {get;set;}
+        public decimal PrecioVenta   {get;set;}
         public int CodMonedaCompra {get;set;}
         public int CodMonedaVenta  {get;set;}
     }

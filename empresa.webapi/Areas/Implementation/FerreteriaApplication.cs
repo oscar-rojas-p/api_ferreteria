@@ -92,7 +92,7 @@ namespace empresa.webapi.Areas.Implementation
             {
                 var ds = await new ProcedureGeneral().Procedure(new ProcedureRequestDto()
                 {
-                    Procedimiento = "dbo.ProcPersona",
+                    Procedimiento = "dbo.ProcProducto",
                     Parametro = "",
                     Indice = 10,
                     Database = "BDAdrian"
@@ -111,8 +111,8 @@ namespace empresa.webapi.Areas.Implementation
                         CantidadActual = medidaTipo.Field<int?>("CantidadActual") ?? 0,
                         CantidadMinima = medidaTipo.Field<int?>("CantidadMinima") ?? 0,
                         CantidadMaxima = medidaTipo.Field<int?>("CantidadMaxima") ?? 0,
-                        PrecioCompra = medidaTipo.Field<double?>("PrecioCompra") ?? 0,
-                        PrecioVenta = medidaTipo.Field<double?>("PrecioVenta") ?? 0,
+                        PrecioCompra = medidaTipo.Field<decimal?>("PrecioCompra") ?? 0,
+                        PrecioVenta = medidaTipo.Field<decimal?>("PrecioVenta") ?? 0,
                         CodMonedaCompra = medidaTipo.Field<int?>("CodMonedaCompra") ?? 0,
                         CodMonedaVenta = medidaTipo.Field<int?>("CodMonedaVenta") ?? 0,
                     });
