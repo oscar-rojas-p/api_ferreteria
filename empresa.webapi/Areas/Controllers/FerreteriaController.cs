@@ -21,6 +21,15 @@ namespace empresa.webapi.Areas.Controllers
             var resultado = await ferreteriaApplication.RegistrarPersona(nombre, apePaterno, apeMaterno, correo, codigoPersona);
             return resultado;
         }
+
+        [HttpGet]
+        [Route("listarPersonas")]
+        public async Task<OperationResult<List<ListaPersonasDto>>> ListarPersonas()
+        {
+            var resultado = await ferreteriaApplication.ListarPersonas();
+            return resultado;
+        }
+
         [HttpPost]
         [Route("registrarProducto")]
         public async Task<OperationResult<List<ListaFerreteriaRespuestaDto>>> RegistrarProducto(string NomProducto, string AbrevProducto, string DescripcionProducto, string CodigoProducto, int CodSubCategoria, int CantidadMinima, int CantidadMaxima, double PrecioCompra, double PrecioVenta, int CodMonedaCompra, int CodMonedaVenta, int CodUsuarioCreacion)
@@ -28,8 +37,6 @@ namespace empresa.webapi.Areas.Controllers
             var resultado = await ferreteriaApplication.RegistrarProducto(NomProducto, AbrevProducto, DescripcionProducto, CodigoProducto, CodSubCategoria, CantidadMinima, CantidadMaxima, PrecioCompra, PrecioVenta, CodMonedaCompra, CodMonedaVenta, CodUsuarioCreacion);
             return resultado;
         }
-
-
 
         [HttpGet]
         [Route("listarProductos")]

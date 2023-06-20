@@ -46,6 +46,49 @@ namespace empresa.webapi.Areas.Implementation
                 throw new Exception(e.Message);
             }
         }
+        public async Task<OperationResult<List<ListaPersonasDto>>> ListarPersonas()
+        {
+            var resultado = new OperationResult<List<ListaPersonasDto>> { isValid = false, exceptions = new List<OperationException>() };
+            try
+            {
+                var ds = await new ProcedureGeneral().Procedure(new ProcedureRequestDto()
+                {
+                    Procedimiento = "dbo.ProcPersona",
+                    Parametro = "",
+                    Indice = 10,
+                    Database = "BDAdrian"
+                });
+
+                var listaMedidaTipo = (from x in ds.Tables[0].AsEnumerable() select x);
+
+                var response = new List<ListaPersonasDto>();
+
+                foreach (var medidaTipo in listaMedidaTipo)
+                {
+                    response.Add(new ListaPersonasDto()
+                    {
+                        NomPersona = medidaTipo.Field<string?>("NomPersona") ?? "",
+                        ApePatPersona = medidaTipo.Field<string?>("ApePatPersona") ?? "",
+                        ApeMatPersona = medidaTipo.Field<string?>("ApeMatPersona") ?? "",
+                        CorreoElectronico = medidaTipo.Field<string?>("CorreoElectronico") ?? "",
+                        CodPersonaTipo = medidaTipo.Field<int?>("CodPersonaTipo") ?? 0,
+                    });
+                }
+
+                resultado.isValid = true;
+                resultado.content = response;
+
+                Console.WriteLine(DateTime.Now + ": " + resultado);
+
+                return resultado;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(DateTime.Now + ": " + e);
+                throw new Exception(e.Message);
+            }
+        }
+
         public async Task<OperationResult<List<ListaFerreteriaRespuestaDto>>> RegistrarProducto(string NomProducto, string AbrevProducto, string DescripcionProducto, string CodigoProducto, int CodSubCategoria, int CantidadMinima, int CantidadMaxima, double PrecioCompra, double PrecioVenta, int CodMonedaCompra, int CodMonedaVenta, int CodUsuarioCreacion)
         {
             var resultado = new OperationResult<List<ListaFerreteriaRespuestaDto>> { isValid = false, exceptions = new List<OperationException>() };
