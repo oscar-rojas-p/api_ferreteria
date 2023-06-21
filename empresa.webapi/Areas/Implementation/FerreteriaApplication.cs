@@ -175,5 +175,88 @@ namespace empresa.webapi.Areas.Implementation
             }
         }
 
+        public async Task<OperationResult<List<ListaFerreteriaRespuestaDto>>> RegistrarUsuario(string nombre, string clave, int codPersona, int codUsuarioTipo)
+        {
+            var resultado = new OperationResult<List<ListaFerreteriaRespuestaDto>> { isValid = false, exceptions = new List<OperationException>() };
+            try
+            {
+                var ds = await new ProcedureGeneral().Procedure(new ProcedureRequestDto()
+                {
+                    Procedimiento = "dbo.ProcUsuario",
+                    Parametro = $"{nombre}|{clave}|{codPersona}|{codUsuarioTipo}",
+                    Indice = 21,
+                    Database = "BDAdrian"
+                });
+
+                var listaMedidaTipo = (from x in ds.Tables[0].AsEnumerable() select x);
+
+                var response = new List<ListaFerreteriaRespuestaDto>();
+
+                foreach (var medidaTipo in listaMedidaTipo)
+                {
+                    response.Add(new ListaFerreteriaRespuestaDto()
+                    {
+                        CodResultado = medidaTipo.Field<int?>("CodResultado") ?? 0,
+                        DesResultado = medidaTipo.Field<string?>("DesResultado") ?? "",
+                    });
+                }
+
+                resultado.isValid = true;
+                resultado.content = response;
+
+                Console.WriteLine(DateTime.Now + ": " + resultado);
+
+                return resultado;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(DateTime.Now + ": " + e);
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<OperationResult<List<ListaUsuariosDto>>> ListarUsuarios()
+        {
+            var resultado = new OperationResult<List<ListaUsuariosDto>> { isValid = false, exceptions = new List<OperationException>() };
+            try
+            {
+                var ds = await new ProcedureGeneral().Procedure(new ProcedureRequestDto()
+                {
+                    Procedimiento = "dbo.ProcUsuario",
+                    Parametro = "",
+                    Indice = 10,
+                    Database = "BDAdrian"
+                });
+
+                var listaMedidaTipo = (from x in ds.Tables[0].AsEnumerable() select x);
+
+                var response = new List<ListaUsuariosDto>();
+
+                foreach (var medidaTipo in listaMedidaTipo)
+                {
+                    response.Add(new ListaUsuariosDto()
+                    {
+                        CodUsuario = medidaTipo.Field<int?>("CodUsuario") ?? 0,
+                        NomUsuario = medidaTipo.Field<string?>("NomUsuario") ?? "",
+                        ClaveUsuario = medidaTipo.Field<string?>("ClaveUsuario") ?? "",
+                        CodPersona = medidaTipo.Field<int?>("CodPersona") ?? 0,
+                        Activo = medidaTipo.Field<int?>("Activo") ?? 0,
+                    });
+                }
+
+                resultado.isValid = true;
+                resultado.content = response;
+
+                Console.WriteLine(DateTime.Now + ": " + resultado);
+
+                return resultado;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(DateTime.Now + ": " + e);
+                throw new Exception(e.Message);
+            }
+        }
+
     }
 }

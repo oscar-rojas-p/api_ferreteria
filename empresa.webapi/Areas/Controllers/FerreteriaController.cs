@@ -46,5 +46,21 @@ namespace empresa.webapi.Areas.Controllers
             return resultado;
         }
 
+        [HttpPost]
+        [Route("registrarUsuario")]
+        public async Task<OperationResult<List<ListaFerreteriaRespuestaDto>>> RegistrarUsuario(string nombre, string clave, int codPersona, int codUsuarioTipo)
+        {
+            var resultado = await ferreteriaApplication.RegistrarUsuario(nombre, clave, codPersona, codUsuarioTipo);
+            return resultado;
+        }
+
+        [HttpGet]
+        [Route("listarUsuarios")]
+        public async Task<OperationResult<List<ListaUsuariosDto>>> ListarUsuarios()
+        {
+            var resultado = await ferreteriaApplication.ListarUsuarios();
+            return resultado;
+        }
+
     }
 }
