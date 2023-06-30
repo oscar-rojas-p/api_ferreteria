@@ -6,7 +6,7 @@
         public string? NomUsuario { get; set; }
         public string? ClaveUsuario { get; set; }
         public int CodPersona { get; set; }
-        public int Activo { get; set; }
+        public bool Activo { get; set; }
 
     }
 }

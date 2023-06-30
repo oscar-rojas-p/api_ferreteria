@@ -240,7 +240,7 @@ namespace empresa.webapi.Areas.Implementation
                         NomUsuario = medidaTipo.Field<string?>("NomUsuario") ?? "",
                         ClaveUsuario = medidaTipo.Field<string?>("ClaveUsuario") ?? "",
                         CodPersona = medidaTipo.Field<int?>("CodPersona") ?? 0,
-                        Activo = medidaTipo.Field<int?>("Activo") ?? 0,
+                        Activo = medidaTipo.Field<bool?>("Activo") ?? false,
                     });
                 }
 
