@@ -67,6 +67,7 @@ namespace empresa.webapi.Areas.Implementation
                 {
                     response.Add(new ListaPersonasDto()
                     {
+                        CodPersona = medidaTipo.Field<int?>("CodPersona") ?? 0,
                         NomPersona = medidaTipo.Field<string?>("NomPersona") ?? "",
                         ApePatPersona = medidaTipo.Field<string?>("ApePatPersona") ?? "",
                         ApeMatPersona = medidaTipo.Field<string?>("ApeMatPersona") ?? "",

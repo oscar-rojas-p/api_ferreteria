@@ -2,6 +2,7 @@
 {
     public class ListaPersonasDto
     {
+        public int CodPersona { get; set; }
         public string? NomPersona { get; set; }
         public string? ApePatPersona { get; set; }
         public string? ApeMatPersona { get; set; }
