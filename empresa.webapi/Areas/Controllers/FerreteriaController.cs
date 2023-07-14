@@ -62,5 +62,21 @@ namespace empresa.webapi.Areas.Controllers
             return resultado;
         }
 
+        [HttpGet]
+        [Route("listarVentas")]
+        public async Task<OperationResult<List<ListaVentasDto>>> ListarVentas()
+        {
+            var resultado = await ferreteriaApplication.ListarVentas();
+            return resultado;
+        }
+
+        [HttpPost]
+        [Route("registrarVenta")]
+        public async Task<OperationResult<List<ListaFerreteriaRespuestaDto>>> RegistrarVenta(ListaVentaPeticionDto listaVentaPeticion)
+        {
+            var resultado = await ferreteriaApplication.RegistrarVenta(listaVentaPeticion);
+            return resultado;
+        }
+
     }
 }

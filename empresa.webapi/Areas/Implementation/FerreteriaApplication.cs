@@ -98,7 +98,7 @@ namespace empresa.webapi.Areas.Implementation
                 var ds = await new ProcedureGeneral().Procedure(new ProcedureRequestDto()
                 {
                     Procedimiento = "dbo.ProcProducto",
-                    Parametro = $"{NomProducto}|{AbrevProducto}|{DescripcionProducto}|{CodigoProducto}|{CodSubCategoria}|{CantidadMinima}|{CantidadMaxima}|{PrecioCompra}|{PrecioVenta}|{CodMonedaCompra}|{CodMonedaVenta}|{CodUsuarioCreacion}",
+                    Parametro = $"{NomProducto}|{AbrevProducto}|{DescripcionProducto}|{CodigoProducto}|{CodSubCategoria}|100|{CantidadMinima}|{CantidadMaxima}|{PrecioCompra}|{PrecioVenta}|{CodMonedaCompra}|{CodMonedaVenta}|{CodUsuarioCreacion}",
                     Indice = 20,
                     Database = "BDAdrian"
                 });
@@ -260,5 +260,95 @@ namespace empresa.webapi.Areas.Implementation
             }
         }
 
+        public async Task<OperationResult<List<ListaVentasDto>>> ListarVentas()
+        {
+            var resultado = new OperationResult<List<ListaVentasDto>> { isValid = false, exceptions = new List<OperationException>() };
+            try
+            {
+                var ds = await new ProcedureGeneral().Procedure(new ProcedureRequestDto()
+                {
+                    Procedimiento = "dbo.ProcVenta",
+                    Parametro = "",
+                    Indice = 10,
+                    Database = "BDAdrian"
+                });
+
+                var listaMedidaTipo = (from x in ds.Tables[0].AsEnumerable() select x);
+
+                var response = new List<ListaVentasDto>();
+
+                foreach (var medidaTipo in listaMedidaTipo)
+                {
+                    response.Add(new ListaVentasDto()
+                    {
+                        CodVenta = medidaTipo.Field<int?>("CodVenta") ?? 0,
+                        CodDocumento = medidaTipo.Field<int?>("CodDocumento") ?? 0,
+                        CodPersona = medidaTipo.Field<int?>("CodPersona") ?? 0,
+                        FechaHoraVenta = medidaTipo.Field<string?>("FechaHoraVenta") ?? "",
+                        CodMoneda = medidaTipo.Field<int?>("CodMoneda") ?? 0,
+                        ImporteSubTotal = medidaTipo.Field<decimal?>("ImporteSubTotal") ?? 0,
+                        ImporteIGV = medidaTipo.Field<decimal?>("ImporteIGV") ?? 0,
+                        IGV = medidaTipo.Field<decimal?>("IGV") ?? 0,
+                        CantidadTotal = medidaTipo.Field<int?>("CantidadTotal") ?? 0,
+                        DireccionEntrega = medidaTipo.Field<string?>("DireccionEntrega") ?? "",
+                        SerieDocumento = medidaTipo.Field<string?>("SerieDocumento") ?? "",
+                        CorrelativoDocumento = medidaTipo.Field<int?>("CorrelativoDocumento") ?? 0,
+                    });
+                }
+
+                resultado.isValid = true;
+                resultado.content = response;
+
+                Console.WriteLine(DateTime.Now + ": " + resultado);
+
+                return resultado;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(DateTime.Now + ": " + e);
+                throw new Exception(e.Message);
+            }
+        }
+
+
+        public async Task<OperationResult<List<ListaFerreteriaRespuestaDto>>> RegistrarVenta(ListaVentaPeticionDto lv)
+        {
+            var resultado = new OperationResult<List<ListaFerreteriaRespuestaDto>> { isValid = false, exceptions = new List<OperationException>() };
+            try
+            {
+                var ds = await new ProcedureGeneral().Procedure(new ProcedureRequestDto()
+                {
+                    Procedimiento = "dbo.ProcVenta",
+                    Parametro = $"{lv.CodDocumento}|{lv.CodPersona}|{lv.CodMoneda}|{lv.DireccionEntrega}|{lv.CorrelativoDocumento}|{lv.CantidadTotal}|{lv.ParametroVentaDetalleCuota}",
+                    Indice = 20,
+                    Database = "BDAdrian"
+                });
+
+                var listaMedidaTipo = (from x in ds.Tables[0].AsEnumerable() select x);
+
+                var response = new List<ListaFerreteriaRespuestaDto>();
+
+                foreach (var medidaTipo in listaMedidaTipo)
+                {
+                    response.Add(new ListaFerreteriaRespuestaDto()
+                    {
+                        CodResultado = medidaTipo.Field<int?>("CodResultado") ?? 0,
+                        DesResultado = medidaTipo.Field<string?>("DesResultado") ?? "",
+                    });
+                }
+
+                resultado.isValid = true;
+                resultado.content = response;
+
+                Console.WriteLine(DateTime.Now + ": " + resultado);
+
+                return resultado;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(DateTime.Now + ": " + e);
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

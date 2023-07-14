@@ -11,5 +11,9 @@ namespace empresa.webapi.Areas.Interface
         Task<OperationResult<List<ListaProductosDto>>> ListarProductos();
         Task<OperationResult<List<ListaFerreteriaRespuestaDto>>> RegistrarUsuario(string nombre, string clave, int codPersona, int codUsuarioTipo);
         Task<OperationResult<List<ListaUsuariosDto>>> ListarUsuarios();
+        Task<OperationResult<List<ListaVentasDto>>> ListarVentas();
+
+        Task<OperationResult<List<ListaFerreteriaRespuestaDto>>> RegistrarVenta(ListaVentaPeticionDto ListaVentaPeticion);
+
     }
 }
